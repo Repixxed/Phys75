@@ -9,18 +9,40 @@
 namespace Phys75 {
 
 	template<typename Type = float>
-	struct Vec2
+	struct SmallVec2
 	{
 		union { Type x, r; };
 		union { Type y, g; };
 	};
 
 	template<typename Type = float>
-	struct Vec3
+	struct SmallVec3
 	{
 		union { Type x, r; };
 		union { Type y, g; };
 		union { Type z, b; };
+	};
+
+	template<typename Type = float>
+	struct ALIGN(16) Vec2
+	{
+		union { Type x, r; };
+		union { Type y, g; }; 
+
+	private:
+		union { Type z, b; };
+		union { Type w, a; };
+	};
+
+	template<typename Type = float>
+	struct ALIGN(16) Vec3
+	{
+		union { Type x, r; };
+		union { Type y, g; };
+		union { Type z, b; };
+
+	private:
+		union { Type w, a; };
 	};
 
 	template<typename Type = float>
