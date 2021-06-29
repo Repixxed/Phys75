@@ -37,7 +37,8 @@ project "Phys75"
 
         includedirs
         {
-            "%{prj.name}/src"
+            "%{prj.name}/src",
+			"ThirdParty/glm"
         }
 
         defines
@@ -51,7 +52,8 @@ project "Phys75"
 
         sysincludedirs
         {
-            "%{prj.name}/src"
+            "%{prj.name}/src",
+			"ThirdParty/glm"
         }
 
     filter "system:linux"
@@ -60,7 +62,8 @@ project "Phys75"
 
         sysincludedirs
         {
-            "%{prj.name}/src"
+            "%{prj.name}/src",
+			"ThirdParty/glm"
         }
 
     filter "configurations:Debug"
@@ -105,7 +108,8 @@ project "Phys75-Examples"
         includedirs
         {
             "%{prj.name}/src",
-			"Phys75/src"
+			"Phys75/src",
+			"ThirdParty/glm"
         }
 
         defines
@@ -120,7 +124,8 @@ project "Phys75-Examples"
         sysincludedirs
         {
             "%{prj.name}/src",
-			"Phys75/src"
+			"Phys75/src",
+			"ThirdParty/glm"
         }
 
     filter "system:linux"
@@ -130,7 +135,8 @@ project "Phys75-Examples"
         sysincludedirs
         {
             "%{prj.name}/src",
-			"Phys75/src"
+			"Phys75/src",
+			"ThirdParty/glm"
         }
 
     filter "configurations:Debug"
