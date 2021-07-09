@@ -11,6 +11,9 @@ workspace "Phys75"
     outputdirTarget = "bin/%{cfg.buildcfg}/%{cfg.system}"
     outputdirObject = "bin-int/%{cfg.buildcfg}/%{cfg.system}"
 
+    include "ThirdParty/glad"
+    include "ThirdParty/glfw-3.3.4"
+
 project "Phys75"
     location "%{prj.name}"
     kind "StaticLib"
@@ -109,7 +112,9 @@ project "Phys75-Examples"
         {
             "%{prj.name}/src",
 			"Phys75/src",
-			"ThirdParty/glm"
+			"ThirdParty/glm",
+            "ThirdParty/glfw-3.3.4/include",
+            "ThirdParty/glad/include"
         }
 
         defines
@@ -125,7 +130,9 @@ project "Phys75-Examples"
         {
             "%{prj.name}/src",
 			"Phys75/src",
-			"ThirdParty/glm"
+			"ThirdParty/glm",
+            "ThirdParty/glfw-3.3.4/include",
+            "ThirdParty/glad/include"
         }
 
     filter "system:linux"
@@ -136,7 +143,9 @@ project "Phys75-Examples"
         {
             "%{prj.name}/src",
 			"Phys75/src",
-			"ThirdParty/glm"
+			"ThirdParty/glm",
+            "ThirdParty/glfw-3.3.4/include",
+            "ThirdParty/glad/include"
         }
 
     filter "configurations:Debug"

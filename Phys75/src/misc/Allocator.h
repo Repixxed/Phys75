@@ -9,16 +9,21 @@
 
 namespace Phys75 {
 
-	template<typename T, typename... Args>
+	template<typename T>
 	struct Ref
 	{
+		template<typename... Args>
 		Ref(Args&&... args);
 		~Ref();
 
+		template<typename... Args>
 		Ref(T* data);
 
-		Ref(const Ref<T, Args...>& other);
-		Ref<T, Args...> operator=(const Ref<T, Args...>& other);
+		template<typename... Args>
+		Ref(const Ref<T>& other);
+
+		template<typename... Args>
+		Ref<T> operator=(const Ref<T>& other);
 
 		T* get();
 
@@ -83,16 +88,17 @@ namespace Phys75 {
 
 	//Ref-------------------------------------------------------------------------------
 
-	template<typename T, typename... Args>
-	inline Ref<T, Args...>::Ref(Args&& ...args)
+	template<typename T>
+	template<typename... Args>
+	inline Ref<T>::Ref(Args&& ...args)
 	{
 		m_Counter = new size_t(1);
 		m_Memory = new T(args...);
 		m_Delete = true;
 	}
 
-	template<typename T, typename... Args>
-	inline Ref<T, Args...>::~Ref()
+	template<typename T>
+	inline Ref<T>::~Ref()
 	{
 		(*m_Counter)--;
 
@@ -105,17 +111,18 @@ namespace Phys75 {
 		}
 	}
 
-	template<typename T, typename... Args>
-	inline Ref<T, Args...>::Ref(T* data)
+	template<typename T>
+	template<typename... Args>
+	inline Ref<T>::Ref(T* data)
 	{
-		m_Counter = new size_t(0);
-		(*m_Counter)++;
+		m_Counter = new size_t(1);
 		m_Memory = data;
 		m_Delete = false;
 	}
 
-	template<typename T, typename... Args>
-	inline Ref<T, Args...>::Ref(const Ref<T, Args...>& other)
+	template<typename T>
+	template<typename... Args>
+	inline Ref<T>::Ref(const Ref<T>& other)
 	{
 		m_Counter = other.m_Counter;
 		(*m_Counter)++;
@@ -123,8 +130,9 @@ namespace Phys75 {
 		m_Delete = other.m_Delete;
 	}
 
-	template<typename T, typename... Args>
-	inline Ref<T, Args...> Ref<T, Args...>::operator=(const Ref<T, Args...>& other)
+	template<typename T>
+	template<typename... Args>
+	inline Ref<T> Ref<T>::operator=(const Ref<T>& other)
 	{
 		m_Counter = other.m_Counter;
 		(*m_Counter)++;
@@ -133,8 +141,8 @@ namespace Phys75 {
 		return *this;
 	}
 
-	template<typename T, typename ...Args>
-	inline T* Ref<T, Args...>::get()
+	template<typename T>
+	inline T* Ref<T>::get()
 	{
 		return m_Memory;
 	}
@@ -163,6 +171,9 @@ namespace Phys75 {
 	inline void Allocator::mark_dirty(T* data)
 	{
 		std::ptrdiff_t ptr = data - static_cast<T*>(m_Blocks[typeid(T)].m_Begin);
+
+		assert(ptr >= 0);
+
 		m_Blocks[typeid(T)].mark_free((size_t)ptr);
 	}
 
